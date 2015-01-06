@@ -1,5 +1,6 @@
-##QuickAndroid
+#QuickAndroid
 一个快速、完善的Android开发框架整合实践
+
 
 ##QA项目简介
 * 本框架QuickAndroid（以下简称：QA）尚处于开发阶段。
@@ -26,15 +27,15 @@
 > * simple    —— 演示程序
 
 
-
-----
-# 关于作者
-* 作者： 壳   “一个酷爱Coding的、平凡的？？码农”
+## 关于作者
+* 作 者： 壳　　“一个酷爱Coding的平凡码农”
 * Email： <alafighting@163.com>
 * 有任何问题或建议，欢迎联系我...
 * 你也可以加入QQ群：432563131（QuickAndroid交流群）
 
 
-----
+
 请关注Github，以便随时了解最新动态
+
 https://github.com/alafighting/QuickAndroid
+
