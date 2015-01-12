@@ -34,8 +34,6 @@
 * 你也可以加入QQ群：432563131（QuickAndroid交流群）
 
 
-
 请关注Github，以便随时了解最新动态
-
 https://github.com/alafighting/QuickAndroid
 
