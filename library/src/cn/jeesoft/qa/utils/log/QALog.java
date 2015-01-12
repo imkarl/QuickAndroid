@@ -1,5 +1,6 @@
 package cn.jeesoft.qa.utils.log;
 
+import android.text.TextUtils;
 import cn.jeesoft.qa.utils.stack.QAStackTraceInfo;
 
 /**
@@ -37,7 +38,11 @@ public class QALog extends Log {
 //			+ "["+info.getClassName()+":"+info.getLineNumber()+"]";
 	}
     protected static String getThreadName() {
-        return Thread.currentThread().getName();
+        String threadName = Thread.currentThread().getName();
+        if (!TextUtils.isEmpty(threadName) && threadName.equals("Instr: android.test.InstrumentationTestRunner")) {
+            threadName = "Instr: AndroidTestCase";
+        }
+        return threadName;
     }
 	
 	

@@ -15,7 +15,7 @@ interface ExceptionCode {
     /** 类型转换 */
     public static final int CODE_CLASSCAST = 1004;
     /** 没有该方法 */
-    public static final int CODE_NOSUCHMETHOD = 1005;
+    public static final int CODE_NO_METHOD = 1005;
     /** 实例化异常 */
     public static final int CODE_INSTANTIATION = 1006;
     /** 非法访问 */
@@ -24,6 +24,26 @@ interface ExceptionCode {
     public static final int CODE_ILLEGAL_ARGUMENT = 1008;
     /** 执行异常 */
     public static final int CODE_EXECUTE = 1009;
+    /** 不支持的编码 */
+    public static final int CODE_NO_ENCODING = 1010;
+    /** 找不到的类型 */
+    public static final int CODE_NO_TYPE = 1011;
+    /** 不支持 */
+    public static final int CODE_NO_SUPPORT = 1012;
+    /** 没有连接 */
+    public static final int CODE_NO_CONNECTION = 1013;
+    /** 网络连接异常 */
+    public static final int CODE_NETWORK = 1014;
+    /** 超时异常 */
+    public static final int CODE_TIMEOUT = 1015;
+    /** 解析失败 */
+    public static final int CODE_PARSER = 1016;
+    /** 认证失败 */
+    public static final int CODE_AUTH_FAILURE = 1017;
+    /** 服务器异常 */
+    public static final int CODE_SERVER = 1018;
+    /** 未知HOST */
+    public static final int CODE_UNKNOW_HOST = 1019;
     
     
     /** 验证失败 */

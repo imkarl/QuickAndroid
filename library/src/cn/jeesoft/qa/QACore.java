@@ -4,12 +4,16 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
 import android.app.Application;
+import android.os.Handler;
 import cn.jeesoft.qa.app.QAApp;
 import cn.jeesoft.qa.config.DefaultConfig;
 import cn.jeesoft.qa.config.QAConfig;
+import cn.jeesoft.qa.error.QACheckException;
 import cn.jeesoft.qa.error.QAException;
 import cn.jeesoft.qa.error.QAInstantiationException;
+import cn.jeesoft.qa.libcore.http.QAHttp;
 import cn.jeesoft.qa.manager.QAActivityManager;
+import cn.jeesoft.qa.manager.QAFileManager;
 
 /**
  * 核心功能管理类
@@ -25,6 +29,12 @@ public class QACore {
         
         public boolean check() {
             return false;
+        }
+        
+        public static void check(QAPrivateCheck check) {
+            if (check == null || !check.check()) {
+                throw new QACheckException("不合法的QAPrivateCheck");
+            }
         }
     }
     
@@ -84,7 +94,7 @@ public class QACore {
                 throw new NullPointerException("QAApp实例化失败");
             }
         } catch (NoSuchMethodException e) {
-            throw new QAInstantiationException(QAException.CODE_NOSUCHMETHOD, "QAApp找不到对应的构造方法", e);
+            throw new QAInstantiationException(QAException.CODE_NO_METHOD, "QAApp找不到对应的构造方法", e);
         } catch (InstantiationException e) {
             throw new QAInstantiationException(QAException.CODE_INSTANTIATION, "QAApp构造方法无法执行", e);
         } catch (IllegalAccessException e) {
@@ -108,11 +118,48 @@ public class QACore {
 	public static QAActivityManager getManager() {
 		return QAApp.getManager();
 	}
+	public static Handler getHandler() {
+	    return QAApp.getHandler();
+	}
+    
+    private static QAHttp StaticHttp = null;
+    /**
+     * 获取全局网络请求管理类
+     */
+    public final static QAHttp getHttp() {
+        if (StaticHttp == null) {
+            synchronized (QAHttp.class) {
+                if (StaticHttp == null) {
+                    QAHttp http = new QAHttp(new QAPrivateCheck() {
+                        @Override
+                        public boolean check() {
+                            return true;
+                        }
+                    });
+                    StaticHttp = http;
+                }
+            }
+        }
+        return StaticHttp;
+    }
+	
 	/**
 	 * 退出应用程序
 	 */
 	public static void exitApp() {
 	    getManager().exitApp(getApp().getApplication());
+	}
+	
+	/**
+	 * 获取合适的缓存目录路径，指定子目录
+	 * @param dirName 子目录名称
+	 * @return 完整路径
+	 */
+	public static String getUsableDir(String dirName) {
+	    return QAFileManager.getUsableDir(getApp().getApplication().getPackageName(), dirName);
+	}
+	public static String getUsableDir() {
+	    return getUsableDir(null);
 	}
 	
 }

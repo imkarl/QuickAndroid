@@ -16,6 +16,7 @@ import android.os.Looper;
 import cn.jeesoft.qa.QACore;
 import cn.jeesoft.qa.config.QAConfig;
 import cn.jeesoft.qa.manager.QAFileManager;
+import cn.jeesoft.qa.ui.uikit.QAToast;
 import cn.jeesoft.qa.utils.QAAppUtils.QAAppInfo;
 import cn.jeesoft.qa.utils.log.QALog;
 
@@ -151,6 +152,10 @@ class DefaultExceptionHandler implements UncaughtExceptionHandler {
                     } catch (Exception e2) {
                     	// 打印发送报告失败异常
                         QALog.e("应用程序退出失败：" + e2.toString(), e2);
+                        
+                        try {
+                            QAToast.show(QACore.getApp().getApplication(), "应用程序异常崩溃");
+                        } catch (Exception e3) { }
                     }
                 }
             }

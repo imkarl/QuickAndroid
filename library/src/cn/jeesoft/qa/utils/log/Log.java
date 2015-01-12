@@ -101,12 +101,12 @@ class Log {
 				final String lineSplit = " \n ➜ \t ";
 				for (Object message : messages) {
 				    if (message instanceof Throwable) {
-				        logMessage += toLogString(message)+"\n"+lineSplit;
+				        logMessage += toLogString(message)+lineSplit;
 				    } else {
-	                    logMessage += toLogString(message)+"\n"+lineSplit;
+	                    logMessage += toLogString(message)+lineSplit;
                     }
 				}
-				logMessage = logMessage.substring(0, logMessage.length() - lineSplit.length() - 1);
+				logMessage = logMessage.substring(0, logMessage.length() - lineSplit.length());
 			}
 			
 			android.util.Log.println(level.getLevel(), logTag, logMessage);

@@ -5,7 +5,6 @@ import cn.jeesoft.qa.QACore.QAPrivateCheck;
 import cn.jeesoft.qa.config.DefaultConfig;
 import cn.jeesoft.qa.config.QAConfig;
 import cn.jeesoft.qa.error.QAAppException;
-import cn.jeesoft.qa.error.QACheckException;
 import cn.jeesoft.qa.error.QAException;
 import cn.jeesoft.qa.manager.QAActivityManager;
 
@@ -52,7 +51,7 @@ abstract class App {
 
 	private static QAActivityManager StaticActivityManager = null;
 	/**
-	 * 获取全局配置管理类
+	 * 获取全局Activity管理类
 	 */
 	public final static QAActivityManager getManager() {
 		if (StaticActivityManager == null) {
@@ -68,6 +67,8 @@ abstract class App {
 	
 	
 	
+	
+	
 
     private Application mApplication;
     /**
@@ -75,9 +76,7 @@ abstract class App {
      */
 	public App(QAPrivateCheck check, Application app) {
 		super();
-		if (check == null || !check.check()) {
-		    throw new QACheckException("不合法的QAPrivateCheck");
-		}
+		QAPrivateCheck.check(check);
 		
 		this.mApplication = app;
 		// 注册APP异常崩溃处理器

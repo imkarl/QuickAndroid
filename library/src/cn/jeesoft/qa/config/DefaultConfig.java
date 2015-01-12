@@ -17,6 +17,10 @@ public class DefaultConfig extends Config {
         set(QAConfig.Tips.ERROR_REPORT_EMAIL, "alafighting@163.com");
         set(QAConfig.Tips.ERROR_REPORT_SUBJECT, "Android客户端 - 错误报告");
         
+        set(QAConfig.Http.TIMEOUT, 3 * 1000);
+        set(QAConfig.Http.MAX_RETRIES, 3);
+        set(QAConfig.Http.BACKOFF_MULTIPLIER, 1.0F);
+        
     }
     
 }

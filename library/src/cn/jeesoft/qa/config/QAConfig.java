@@ -16,27 +16,11 @@ import cn.jeesoft.qa.model.pair.QAKeyValue;
  * 请不要在此保存占内存的数据，仅适用于保存全局常量
  * </pre>
  * 
- * @version v0.1.1 king 2015-01-06 增加配置项常量
+ * @version v0.1.2 king 2015-01-12 增加父类
  * @version v0.1.0 king 2015-01-05 定义常用方法
  */
-public interface QAConfig {
+public interface QAConfig extends QAConfigKeys {
     
-    /**
-     * 提示信息常量
-     */
-    public static class Tips {
-
-        public static final String ERROR_REPORT_TITLE = "ERROR_REPORT_TITLE";
-        public static final String ERROR_REPORT_DESCRIPTION = "ERROR_REPORT_DESCRIPTION";
-        public static final String ERROR_REPORT_SUBMIT = "ERROR_REPORT_SUBMIT";
-        public static final String ERROR_REPORT_CANCEL = "ERROR_REPORT_CANCEL";
-        public static final String ERROR_REPORT_EMAIL = "ERROR_REPORT_EMAIL";
-        public static final String ERROR_REPORT_SUBJECT = "ERROR_REPORT_SUBJECT";
-        
-    }
-    
-    
-	
     /**
      * 设置配置项
      * @param keyValues 配置项
