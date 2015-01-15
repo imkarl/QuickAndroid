@@ -25,7 +25,7 @@ interface ExceptionCode {
     /** 执行异常 */
     public static final int CODE_EXECUTE = 1009;
     /** 不支持的编码 */
-    public static final int CODE_NO_ENCODING = 1010;
+    public static final int CODE_NO_CHAR_ENCODING = 1010;
     /** 找不到的类型 */
     public static final int CODE_NO_TYPE = 1011;
     /** 不支持 */
@@ -44,6 +44,14 @@ interface ExceptionCode {
     public static final int CODE_SERVER = 1018;
     /** 未知HOST */
     public static final int CODE_UNKNOW_HOST = 1019;
+    /** IO异常 */
+    public static final int CODE_IO_FILE = 1010;
+    /** 解码异常 */
+    public static final int CODE_DECODE = 1011;
+    /** 解码异常 */
+    public static final int CODE_OOM = 1012;
+    
+
     
     
     /** 验证失败 */

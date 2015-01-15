@@ -1,5 +1,7 @@
 package cn.jeesoft.qa.config;
 
+import cn.jeesoft.qa.R;
+
 /**
  * 配置管理类
  * @version v0.1.0 king 2015-01-05
@@ -20,6 +22,10 @@ public class DefaultConfig extends Config {
         set(QAConfig.Http.TIMEOUT, 3 * 1000);
         set(QAConfig.Http.MAX_RETRIES, 3);
         set(QAConfig.Http.BACKOFF_MULTIPLIER, 1.0F);
+        
+//        set(QAConfig.Http.IMAGE_LOADING, android.R.drawable.ic_menu_rotate);
+        set(QAConfig.Http.IMAGE_LOADING, R.drawable.qa_ic_loading);
+        set(QAConfig.Http.IMAGE_LOADFAIL, R.drawable.qa_ic_loadfail);
         
     }
     

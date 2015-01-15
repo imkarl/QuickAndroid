@@ -18,15 +18,15 @@ public interface QAHttpCallback<T> {
      */
     public void onCancel(String url);
     /**
-     * 读取缓存数据成功
+     * 加载缓存数据成功
      */
     public void onSuccessCache(String url, T data);
     /**
-     * 读取网络数据成功
+     * 加载网络数据成功
      */
     public void onSuccessNet(String url, T data);
     /**
-     * 网络请求失败
+     * 加载网络数据失败
      */
     public void onFail(String url, QAException exception);
     

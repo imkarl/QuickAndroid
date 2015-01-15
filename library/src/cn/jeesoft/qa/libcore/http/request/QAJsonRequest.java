@@ -48,7 +48,7 @@ public class QAJsonRequest<V extends QAJson> extends QARequest<V> {
 	
 	@SuppressWarnings("unchecked")
     @Override
-	V parseResultData(String resultData) {
+	V parseResultData(String resultData) throws Throwable {
 	    return (V)QAJsonUtils.fromJson(resultData);
 	}
 	

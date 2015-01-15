@@ -4,6 +4,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
 import android.app.Application;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import cn.jeesoft.qa.app.QAApp;
 import cn.jeesoft.qa.config.DefaultConfig;
@@ -11,7 +12,11 @@ import cn.jeesoft.qa.config.QAConfig;
 import cn.jeesoft.qa.error.QACheckException;
 import cn.jeesoft.qa.error.QAException;
 import cn.jeesoft.qa.error.QAInstantiationException;
+import cn.jeesoft.qa.error.QANullException;
+import cn.jeesoft.qa.libcore.http.DefaultHttp;
 import cn.jeesoft.qa.libcore.http.QAHttp;
+import cn.jeesoft.qa.libcore.image.DefaultImage;
+import cn.jeesoft.qa.libcore.image.QAImage;
 import cn.jeesoft.qa.manager.QAActivityManager;
 import cn.jeesoft.qa.manager.QAFileManager;
 
@@ -130,7 +135,7 @@ public class QACore {
         if (StaticHttp == null) {
             synchronized (QAHttp.class) {
                 if (StaticHttp == null) {
-                    QAHttp http = new QAHttp(new QAPrivateCheck() {
+                    QAHttp http = new DefaultHttp(new QAPrivateCheck() {
                         @Override
                         public boolean check() {
                             return true;
@@ -141,6 +146,55 @@ public class QACore {
             }
         }
         return StaticHttp;
+    }
+    
+    private static QAImage StaticImage = null;
+    /**
+     * 获取全局网络请求管理类
+     */
+    public final static QAImage getImage() throws QANullException {
+        if (StaticImage == null) {
+            synchronized (QAImage.class) {
+                if (StaticImage == null) {
+                    QAImage image = null;
+                    
+                    try {
+                        Drawable imageLoading = getConfig().getDrawable(QAConfig.Http.IMAGE_LOADING);
+                        Drawable imageLoadfail = getConfig().getDrawable(QAConfig.Http.IMAGE_LOADFAIL);
+
+                        if (imageLoading == null || imageLoadfail == null) {
+                            image = new DefaultImage(new QAPrivateCheck() {
+                                    @Override
+                                    public boolean check() {
+                                        return true;
+                                    }
+                                },
+                                getApp().getApplication(), imageLoading, imageLoadfail);
+                        }
+                    } catch (Exception e) { }
+                    
+                    if (image == null) {
+                        int imageLoadingRes = getConfig().getInt(QAConfig.Http.IMAGE_LOADING);
+                        int imageLoadfailRes = getConfig().getInt(QAConfig.Http.IMAGE_LOADFAIL);
+
+                        image = new DefaultImage(new QAPrivateCheck() {
+                            @Override
+                            public boolean check() {
+                                return true;
+                            }
+                        },
+                        getApp().getApplication(), imageLoadingRes, imageLoadfailRes);
+                    }
+                    
+                    StaticImage = image;
+                }
+            }
+        }
+        
+        if (StaticImage == null) {
+            throw new QANullException("QAImage create Failed.");
+        }
+        return StaticImage;
     }
 	
 	/**

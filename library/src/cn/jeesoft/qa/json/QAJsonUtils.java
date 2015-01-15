@@ -25,6 +25,7 @@ import com.alibaba.fastjson.util.TypeUtils;
 
 /**
  * JSON处理工具类
+ * @version v0.1.1 king 2015-01-15 JSON解析失败时，不返回null抛出异常
  * @version v0.1.0 king 2014-11-21 JSON序列/反序列
  */
 public class QAJsonUtils {
@@ -40,7 +41,7 @@ public class QAJsonUtils {
     /**
      * 序列化为JSON对象
      * @param javaObject 要序列化的对象
-     * @return 三种可能值：JsonObject、JsonArray、null
+     * @return 三种种可能值：QAJsonObject、QAJsonArray、null
      */
     public static QAJson toJson(Object javaObject) {
         if (javaObject == null) {
@@ -127,7 +128,7 @@ public class QAJsonUtils {
     /**
      * 反序列化
      * @param json JSON格式字符串
-     * @return 三种可能值：JsonObject、JsonArray、null
+     * @return 两种种可能值：QAJsonObject、QAJsonArray
      */
     public static QAJson fromJson(String json) throws QAJsonException {
         if (json == null) {
@@ -137,17 +138,18 @@ public class QAJsonUtils {
         try {
             Object value = new JSONTokener(json).nextValue();
             if (value == null) {
-                return null;
+                throw new QAJsonException(QAException.CODE_FORMAT, "'json' parser Failed.");
             }
             
             if (value instanceof JSONObject) {
                 return new QAJsonObject((JSONObject) value);
             } else if (value instanceof JSONArray) {
                 return new QAJsonArray((JSONArray) value);
+            } else {
+                throw new QAJsonException(QAException.CODE_FORMAT, "'"+value+"' cannot convert JSON.");
             }
-            return null;
         } catch (org.json.JSONException e) {
-            throw new QAJsonException(QAException.CODE_FORMAT, e.getLocalizedMessage());
+            throw new QAJsonException(QAException.CODE_FORMAT, e.getMessage());
         }
     }
     /**

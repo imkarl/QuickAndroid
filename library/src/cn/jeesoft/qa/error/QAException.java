@@ -45,8 +45,12 @@ public class QAException extends Exception implements ExceptionCode {
                         volleyError.networkResponse);
             }
         } else {
-            // TODO 未细化处理
-            return new QAException(QAException.CODE_UNKNOW, exception);
+            if (exception instanceof NullPointerException) {
+                return new QANullException(exception.getMessage(), exception.getCause());
+            } else {
+                // TODO 未细化处理
+                return new QAException(QAException.CODE_UNKNOW, exception.getMessage(), exception.getCause());
+            }
         }
     }
     

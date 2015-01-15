@@ -27,6 +27,7 @@ import com.android.volley.toolbox.HttpHeaderParser;
  * 支持GET、POST的请求
  * 
  * @param <V> 返回值类型
+ * @version v0.1.1 king 2015-01-15 修改返回值为空时，进入onFial()
  * @version v0.1.0 king 2015-01-12 支持GET、POST
  */
 public abstract class QARequest<V> extends Request<V> {
@@ -131,10 +132,13 @@ public abstract class QARequest<V> extends Request<V> {
         try {
             String resultData =
                 new String(response.data, HttpHeaderParser.parseCharset(response.headers));
-            return (Response<V>) Response.success(parseResultData(resultData),
-                    HttpHeaderParser.parseCacheHeaders(response));
+            V result = parseResultData(resultData);
+            if (result == null) {
+                throw new QANullException("Newtork request load NULL.");
+            }
+            return (Response<V>) Response.success(result, HttpHeaderParser.parseCacheHeaders(response));
         } catch (UnsupportedEncodingException e) {
-            return Response.error(new QAVolleyError(new QANoFoundException(QAException.CODE_NO_ENCODING, e)));
+            return Response.error(new QAVolleyError(new QANoFoundException(QAException.CODE_NO_CHAR_ENCODING, e)));
         } catch (QAException e) {
             return Response.error(new QAVolleyError(e));
         } catch (NullPointerException e) {

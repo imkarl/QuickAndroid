@@ -20,7 +20,7 @@ public class QAClassUtils {
         if (parent == subclass) {
             return true;
         }
-        if (parent == null) {
+        if (parent == null || subclass == null) {
             return false;
         }
         return parent.isAssignableFrom(subclass);

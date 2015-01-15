@@ -31,6 +31,10 @@ interface QAConfigKeys {
         public static final String MAX_RETRIES = "Http.MAX_RETRIES";
         /** 退避指数：“指数退避”用来从RESTful服务器请求数据 */
         public static final String BACKOFF_MULTIPLIER = "Http.BACKOFF_MULTIPLIER";
+        /** 加载中显示的图片 */
+        public static final String IMAGE_LOADING = "Http.IMAGE_LOADING";
+        /** 加载失败显示的图片 */
+        public static final String IMAGE_LOADFAIL = "Http.IMAGE_LOADFAIL";
         
     }
     
