@@ -1,4 +1,4 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -6,12 +6,28 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="cn.jeesoft.qa.simple.MainActivity" >
+    tools:context="cn.jeesoft.qa.simple.MainActivity"
+    android:orientation="vertical" >
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/btn_test"
-        android:onClick="myclick" />
+        android:text="@string/btn_test_exception"
+        android:onClick="testException" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_test_http"
+        android:onClick="testHttp" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="60dip"
+        android:text="@string/btn_test_http"
+        android:onClick="testHttpImage" />
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="60dip"
+        android:text="@string/btn_test_image"
+        android:onClick="testImage" />
 
-</RelativeLayout>
+</LinearLayout>
