@@ -2,6 +2,7 @@ package cn.jeesoft.qa.error;
 
 import cn.jeesoft.qa.libcore.http.request.QAVolleyError;
 
+import com.alibaba.fastjson.JSONException;
 import com.android.volley.VolleyError;
 
 /**
@@ -47,6 +48,8 @@ public class QAException extends Exception implements ExceptionCode {
         } else {
             if (exception instanceof NullPointerException) {
                 return new QANullException(exception.getMessage(), exception.getCause());
+            } else if (exception instanceof JSONException || exception instanceof org.json.JSONException) {
+                return new QAJsonException(QAException.CODE_FORMAT, exception.getMessage(), exception.getCause());
             } else {
                 // TODO 未细化处理
                 return new QAException(QAException.CODE_UNKNOW, exception.getMessage(), exception.getCause());

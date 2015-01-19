@@ -51,7 +51,6 @@ class QAImageLoaderConfig {
                 //.handler(new Handler()) // default
                 .build();
 
-
         File cacheDir = new File(QAFileManager.getUsableDir(context.getPackageName()));
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
                 //.memoryCacheExtraOptions(480, 800) // default = device screen dimensions 缓存尺寸

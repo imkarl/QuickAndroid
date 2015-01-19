@@ -23,7 +23,6 @@ public class DefaultConfig extends Config {
         set(QAConfig.Http.MAX_RETRIES, 3);
         set(QAConfig.Http.BACKOFF_MULTIPLIER, 1.0F);
         
-//        set(QAConfig.Http.IMAGE_LOADING, android.R.drawable.ic_menu_rotate);
         set(QAConfig.Http.IMAGE_LOADING, R.drawable.qa_ic_loading);
         set(QAConfig.Http.IMAGE_LOADFAIL, R.drawable.qa_ic_loadfail);
         
