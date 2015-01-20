@@ -1,8 +1,8 @@
 package cn.jeesoft.qa.error;
 
 /**
- * 不支持类型的异常
- * @version v0.1.0 king 2015-01-12 不支持类型的异常
+ * 不支持异常
+ * @version v0.1.0 king 2015-01-12 不支持异常
  */
 public class QANoSupportException extends QAException {
     private static final long serialVersionUID = 1L;

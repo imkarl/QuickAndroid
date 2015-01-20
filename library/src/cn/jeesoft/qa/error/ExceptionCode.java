@@ -50,6 +50,10 @@ interface ExceptionCode {
     public static final int CODE_DECODE = 1011;
     /** 解码异常 */
     public static final int CODE_OOM = 1012;
+    /** 只读 */
+    public static final int CODE_READ_ONLY = 1013;
+    /** 不允许 */
+    public static final int CODE_NO_ALLOW = 1014;
     
 
     

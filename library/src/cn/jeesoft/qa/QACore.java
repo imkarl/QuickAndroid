@@ -2,10 +2,14 @@ package cn.jeesoft.qa;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
+import java.util.Map;
 
 import android.app.Application;
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
+import android.text.TextUtils;
 import cn.jeesoft.qa.app.QAApp;
 import cn.jeesoft.qa.config.DefaultConfig;
 import cn.jeesoft.qa.config.QAConfig;
@@ -13,6 +17,9 @@ import cn.jeesoft.qa.error.QACheckException;
 import cn.jeesoft.qa.error.QAException;
 import cn.jeesoft.qa.error.QAInstantiationException;
 import cn.jeesoft.qa.error.QANullException;
+import cn.jeesoft.qa.libcore.db.DefaultDb;
+import cn.jeesoft.qa.libcore.db.QADb;
+import cn.jeesoft.qa.libcore.db.QADb.QADbListener;
 import cn.jeesoft.qa.libcore.http.DefaultHttp;
 import cn.jeesoft.qa.libcore.http.QAHttp;
 import cn.jeesoft.qa.libcore.image.DefaultImage;
@@ -197,6 +204,51 @@ public class QACore {
         return StaticImage;
     }
 	
+
+    public static final int DEF_DB_VERSION = 1;
+    public static final String DEF_DB_NAME = "QA_default.db";
+    
+    private static final Map<String, QADb> mDbMap = new HashMap<String, QADb>();
+    public static QADb getDb(Context context, QADbListener listener) {
+        return getDb(context, null, null, DEF_DB_VERSION, listener);
+    }
+    public static QADb getDb(Context context, String dbDir, String dbName, int version, QADbListener listener) {
+        if (TextUtils.isEmpty(dbDir)) {
+            dbDir = QAFileManager.getUsableDir(QACore.getApp().getPackageName());
+        }
+        if (TextUtils.isEmpty(dbName)) {
+            dbName = DEF_DB_NAME;
+        }
+        if (version <= 0) {
+            version = DEF_DB_VERSION;
+        }
+        
+        final String key = dbDir+dbName;
+        // 无缓存则实例化
+        if (!mDbMap.containsKey(key)) {
+            synchronized (QADb.class) {
+                if (!mDbMap.containsKey(key)) {
+                    // 创建新实例
+                    QADb db = new DefaultDb(context, dbDir, dbName, null, version, listener);
+                    mDbMap.put(key, db);
+                    return db;
+                }
+            }
+        }
+
+        // 从缓存获取
+        QADb db = mDbMap.get(key);
+        synchronized (QADb.class) {
+            // 判断是否升级
+            DefaultDb.checkOnUpgrade(db.getDatabase(), dbName, version, listener);
+        }
+        return db;
+    }
+    
+    
+    
+    
+    
 	/**
 	 * 退出应用程序
 	 */
