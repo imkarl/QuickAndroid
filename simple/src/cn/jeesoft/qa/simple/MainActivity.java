@@ -1,8 +1,10 @@
 package cn.jeesoft.qa.simple;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -11,8 +13,14 @@ import android.view.View;
 import cn.jeesoft.qa.QACore;
 import cn.jeesoft.qa.error.QAException;
 import cn.jeesoft.qa.json.QAJson;
+import cn.jeesoft.qa.libcore.db.QADb;
+import cn.jeesoft.qa.libcore.db.QADb.QADbListener;
+import cn.jeesoft.qa.libcore.db.QADbMaster;
 import cn.jeesoft.qa.libcore.http.QAHttpCallback;
 import cn.jeesoft.qa.libcore.http.QAHttpMethod;
+import cn.jeesoft.qa.simple.db.Note;
+import cn.jeesoft.qa.simple.db.NoteDao;
+import cn.jeesoft.qa.ui.uikit.QAToast;
 import cn.jeesoft.qa.utils.log.QALog;
 
 public class MainActivity extends ActionBarActivity {
@@ -126,6 +134,37 @@ public class MainActivity extends ActionBarActivity {
     public void testImage(View view) {
         String url = "https://raw.githubusercontent.com/alafighting/QuickAndroid/master/library/res/drawable-hdpi/qa_ic_logo.png";
         QACore.getImage().load(view, url);
+    }
+    
+    /**
+     * 测试DB读写
+     */
+    public void testDb(View view) {
+        QADb helper = QACore.getDb(this, new QADbListener() {
+            @Override
+            public void onCreate(SQLiteDatabase db) {
+                QALog.e("第一次创建数据库");
+                NoteDao.createTable(db, false);
+            }
+            @Override
+            public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+                QALog.e("升级数据库");
+                NoteDao.dropTable(db, true);
+                NoteDao.createTable(db, false);
+            }
+            @Override
+            public void onRegister(QADbMaster master) {
+                master.registerDao(NoteDao.class);
+            }
+        });
+        NoteDao noteDao = helper.getDbDao(NoteDao.class);
+        
+        // 插入数据
+        QALog.e("insert=>"+noteDao.insert(new Note(null, "text", "comment", new Date())));
+        // 读取数据
+        QALog.e("loadAll=>"+noteDao.loadAll());
+        
+        QAToast.show(this, "执行完成，请通过LogCat查看结果");
     }
 
 }

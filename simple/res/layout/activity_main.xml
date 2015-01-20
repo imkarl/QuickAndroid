@@ -24,10 +24,15 @@
         android:layout_height="60dip"
         android:text="@string/btn_test_http"
         android:onClick="testHttpImage" />
-    <ImageButton
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="60dip"
         android:text="@string/btn_test_image"
         android:onClick="testImage" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_test_db"
+        android:onClick="testDb" />
 
 </LinearLayout>
