@@ -7,6 +7,7 @@ import cn.jeesoft.qa.utils.stack.QAStackTraceInfo;
 /**
  * 日志打印工具类
  * @version v0.1.0 king 2014-11-07 自动生成TAG信息
+ * @version v0.1.1 king 2015-01-22 可设置全局TAG
  */
 public class QALog extends Log {
     public static final QALevel DEBUG = QALevel.DEBUG;
@@ -23,12 +24,34 @@ public class QALog extends Log {
      * 设置自定义Log
      */
     public static QASelfLog selfLog;
+    private static String TAG;
 	
-	/**
-	 * 自动生成TAG
-	 * @return
-	 */
-	protected static String getTag(int index) {
+    /**
+     * 设置TAG
+     * @param tag
+     */
+    protected static void setTag(String tag) {
+        QALog.TAG = tag;
+    }
+    /**
+     * 获取TAG
+     * @return
+     */
+    protected static String getTag() {
+        if (!TextUtils.isEmpty(TAG)) {
+            return TAG;
+        } else {
+            return getStackTraceInfo(3);
+        }
+    }
+    
+    
+    /**
+     * 获取栈堆信息
+     * @param index
+     * @return
+     */
+	protected static String getStackTraceInfo(int index) {
 		QAStackTraceInfo info = QAStackTraceInfo.getStackTraceInfo(index);
 		if (info == null) {
 			return "[null]";
@@ -37,11 +60,11 @@ public class QALog extends Log {
 		String tag = "[%s]%s.%s(L:%d)";
         String classSimpleName = info.getClassSimpleName();
         return String.format(tag, getThreadName(), classSimpleName, info.getMethodName(), info.getLineNumber());
-        
-//		return info.getClassSimpleName() + "."
-//			+ info.getMethodName() + "()"
-//			+ "["+info.getClassName()+":"+info.getLineNumber()+"]";
 	}
+	/**
+	 * 获取当前线程名
+	 * @return
+	 */
     protected static String getThreadName() {
         String threadName = Thread.currentThread().getName();
         if (!TextUtils.isEmpty(threadName) && threadName.equals("Instr: android.test.InstrumentationTestRunner")) {
@@ -59,21 +82,21 @@ public class QALog extends Log {
         if (selfLog != null) {
             selfLog.i(messages);
         } else {
-            i(getTag(3), messages);
+            i(getTag(), messages);
         }
 	}
 	public static void d(Object... messages) {
         if (selfLog != null) {
             selfLog.d(messages);
         } else {
-            d(getTag(3), messages);
+            d(getTag(), messages);
         }
 	}
 	public static void e(Object... messages) {
         if (selfLog != null) {
             selfLog.e(messages);
         } else {
-            e(getTag(3), messages);
+            e(getTag(), messages);
         }
 	}
 	
@@ -85,7 +108,7 @@ public class QALog extends Log {
 	    if (selfLog != null) {
 	        selfLog.format(level, format, args);
 	    } else {
-	        log(level, getTag(3), buildMessage(format, args));
+	        log(level, getTag(), buildMessage(format, args));
         }
     }
     /**
@@ -95,7 +118,7 @@ public class QALog extends Log {
         if (selfLog != null) {
             selfLog.format(level, exception, format, args);
         } else {
-            log(level, getTag(3), buildMessage(format, args), exception);
+            log(level, getTag(), buildMessage(format, args), exception);
         }
     }
 	
@@ -103,7 +126,7 @@ public class QALog extends Log {
         if (selfLog != null) {
             selfLog.log(level, messages);
         } else {
-            log(level, getTag(3), messages);
+            log(level, getTag(), messages);
         }
     }
 	
