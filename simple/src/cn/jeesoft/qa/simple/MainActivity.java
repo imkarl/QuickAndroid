@@ -20,7 +20,6 @@ import cn.jeesoft.qa.libcore.http.QAHttpCallback;
 import cn.jeesoft.qa.libcore.http.QAHttpMethod;
 import cn.jeesoft.qa.simple.db.Note;
 import cn.jeesoft.qa.simple.db.NoteDao;
-import cn.jeesoft.qa.ui.uikit.QAToast;
 import cn.jeesoft.qa.utils.log.QALog;
 
 public class MainActivity extends ActionBarActivity {
@@ -33,12 +32,12 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         
         try {
-            QALog.e(this);
-            QALog.e(QACore.getApp());
-            QALog.e(QACore.getConfig());
-            QALog.e(QACore.getManager());
+            QACore.log.e(this);
+            QACore.log.e(QACore.getApp());
+            QACore.log.e(QACore.getConfig());
+            QACore.log.e(QACore.getManager());
         } catch (QAException e) {
-            QALog.e(e);
+        	QACore.log.e(e);
         }
         
     }
@@ -164,7 +163,7 @@ public class MainActivity extends ActionBarActivity {
         // 读取数据
         QALog.e("loadAll=>"+noteDao.loadAll());
         
-        QAToast.show(this, "执行完成，请通过LogCat查看结果");
+        QACore.toast.show(this, "执行完成，请通过LogCat查看结果");
     }
 
 }
