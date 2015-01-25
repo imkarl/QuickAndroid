@@ -1,5 +1,6 @@
 package cn.jeesoft.qa.ui.uikit;
 
+import cn.jeesoft.qa.QACore.QAPrivateCheck;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.widget.Toast;
@@ -12,10 +13,9 @@ import android.widget.Toast;
 public class QAToast {
     private static Toast mToast = null;
 
-    private QAToast() {
+    protected QAToast(QAPrivateCheck check) {
+    	QAPrivateCheck.check(check);
     }
-    
-    
     
 
     /*

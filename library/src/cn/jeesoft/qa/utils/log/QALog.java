@@ -1,6 +1,7 @@
 package cn.jeesoft.qa.utils.log;
 
 import android.text.TextUtils;
+import cn.jeesoft.qa.QACore.QAPrivateCheck;
 import cn.jeesoft.qa.utils.stack.QAStackTraceInfo;
 
 /**
@@ -12,6 +13,10 @@ public class QALog extends Log {
     public static final QALevel INFO = QALevel.INFO;
     public static final QALevel ERROR = QALevel.ERROR;
     
+    
+    protected QALog(QAPrivateCheck check) {
+    	QAPrivateCheck.check(check);
+    }
     
     
     /**

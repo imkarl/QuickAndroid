@@ -11,12 +11,10 @@ import org.json.JSONTokener;
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.text.TextUtils;
-
 import cn.jeesoft.qa.error.QAException;
 import cn.jeesoft.qa.error.QAJsonException;
 import cn.jeesoft.qa.error.QANullException;
 import cn.jeesoft.qa.utils.version.QASdkVersion;
-import cn.jeesoft.qa.utils.version.QASdkVersionCodes;
 
 /**
  * 继承自org.json.JsonArray
@@ -340,7 +338,7 @@ public class QAJsonArray extends JSONArray implements QAJson {
      */
     @TargetApi(Build.VERSION_CODES.KITKAT)
     public Object remove(int index) {
-        if (QASdkVersion.isSupport(QASdkVersionCodes.KITKAT)) {
+        if (QASdkVersion.isSupport(QASdkVersion.KITKAT)) {
             return super.remove(index);
         } else {
             if (index < 0 || index >= length()) {

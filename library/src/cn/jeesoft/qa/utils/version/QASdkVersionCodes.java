@@ -4,7 +4,7 @@ package cn.jeesoft.qa.utils.version;
  * Android SDK 版本号（API Level）
  * @version v0.1.0 king 2014-11-06 根据版本号、版本名称获取API Level
  */
-public class QASdkVersionCodes {
+class QASdkVersionCodes {
 
     /**
      * October 2008: The original, first, version of Android. Yay!

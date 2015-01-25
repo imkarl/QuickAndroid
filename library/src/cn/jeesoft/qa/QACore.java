@@ -31,7 +31,7 @@ import cn.jeesoft.qa.manager.QAFileManager;
  * 核心功能管理类
  * @version v0.1.0 king 2015-01-05 核心功能管理
  */
-public class QACore {
+public class QACore implements QACoreUtils {
     /**
      * 合法性验证类
      */

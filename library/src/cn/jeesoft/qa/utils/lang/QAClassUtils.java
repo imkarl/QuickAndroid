@@ -3,12 +3,18 @@ package cn.jeesoft.qa.utils.lang;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
+import cn.jeesoft.qa.QACore.QAPrivateCheck;
+
 
 /**
  * Class帮助类
  * @version v0.1.0 king 2014-11-21 Class类型判断
  */
 public class QAClassUtils {
+    
+	protected QAClassUtils(QAPrivateCheck check) {
+    	QAPrivateCheck.check(check);
+    }
     
     /**
      * 判断是否继承/接口实现关系

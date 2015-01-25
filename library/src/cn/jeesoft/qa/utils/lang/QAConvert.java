@@ -1,5 +1,6 @@
 package cn.jeesoft.qa.utils.lang;
 
+import cn.jeesoft.qa.QACore.QAPrivateCheck;
 import android.text.TextUtils;
 
 /**
@@ -7,6 +8,10 @@ import android.text.TextUtils;
  * @version v0.1.0 king 2014-11-18 类型转换处理
  */
 public class QAConvert {
+	
+    protected QAConvert(QAPrivateCheck check) {
+    	QAPrivateCheck.check(check);
+    }
 
     /**
      * 字符串转长整形

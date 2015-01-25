@@ -1,17 +1,15 @@
 package cn.jeesoft.qa.utils.stack;
 
+
 /**
  * 堆栈跟踪信息
  * @version v0.1.0 king 2014-11-04 获取堆栈跟踪信息
  */
 public class QAStackTraceInfo {
-	private String className;
-	private String classSimpleName;
-	private String fileName;
-	private String methodName;
-	private int lineNumber;
-	
-	
+
+    protected QAStackTraceInfo() {
+    }
+    
 	
 	/**
 	 * 获取栈堆信息
@@ -70,6 +68,14 @@ public class QAStackTraceInfo {
     }
 	
 	
+
+    
+    
+	private String className;
+	private String classSimpleName;
+	private String fileName;
+	private String methodName;
+	private int lineNumber;
 	
 	
 	@Override

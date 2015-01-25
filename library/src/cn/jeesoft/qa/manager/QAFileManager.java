@@ -9,23 +9,23 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.StatFs;
 import android.text.TextUtils;
+import cn.jeesoft.qa.QACore.QAPrivateCheck;
 import cn.jeesoft.qa.utils.version.QASdkVersion;
-import cn.jeesoft.qa.utils.version.QASdkVersionCodes;
 
 /**
  * 缓存管理工具类
  * @version v0.1.1 king 2014-11-10 简化调用方法
  * @version v0.1.0 king 2013-11-20 缓存管理目录，存储用户配置信息
  */
-public final class QAFileManager {
+public class QAFileManager {
     
     public static final String separator = File.separator;
     private static final String EXTERNAL_STORAGE_PERMISSION = "android.permission.WRITE_EXTERNAL_STORAGE";
     
-    
-    private QAFileManager(){
+
+    protected QAFileManager(QAPrivateCheck check) {
+    	QAPrivateCheck.check(check);
     }
-    
     
     /**
      * 获取外置SD卡缓存目录路径
@@ -255,7 +255,7 @@ public final class QAFileManager {
         
         File path = Environment.getExternalStorageDirectory();
         StatFs stat = new StatFs(path.getPath());
-        if (QASdkVersion.isSupport(QASdkVersionCodes.JELLY_BEAN_MR2)) {
+        if (QASdkVersion.isSupport(QASdkVersion.JELLY_BEAN_MR2)) {
             return stat.getAvailableBytes();
         } else {
             long availableBlocks = stat.getAvailableBlocks();
@@ -276,7 +276,7 @@ public final class QAFileManager {
 
         File path = Environment.getExternalStorageDirectory();
         StatFs stat = new StatFs(path.getPath());
-        if (QASdkVersion.isSupport(QASdkVersionCodes.JELLY_BEAN_MR2)) {
+        if (QASdkVersion.isSupport(QASdkVersion.JELLY_BEAN_MR2)) {
             return stat.getTotalBytes();
         } else {
             long totalBlocks = stat.getBlockCount();
@@ -298,7 +298,7 @@ public final class QAFileManager {
         
         File path = new File(getSDCardInternalRoot());
         StatFs stat = new StatFs(path.getPath());
-        if (QASdkVersion.isSupport(QASdkVersionCodes.JELLY_BEAN_MR2)) {
+        if (QASdkVersion.isSupport(QASdkVersion.JELLY_BEAN_MR2)) {
             return stat.getAvailableBytes();
         } else {
             long availableBlocks = stat.getAvailableBlocks();
@@ -319,7 +319,7 @@ public final class QAFileManager {
         
         File path = new File(getSDCardInternalRoot());
         StatFs stat = new StatFs(path.getPath());
-        if (QASdkVersion.isSupport(QASdkVersionCodes.JELLY_BEAN_MR2)) {
+        if (QASdkVersion.isSupport(QASdkVersion.JELLY_BEAN_MR2)) {
             return stat.getTotalBytes();
         } else {
             long totalBlocks = stat.getBlockCount();
@@ -337,7 +337,7 @@ public final class QAFileManager {
     public static long getDataAvailableSize() {
         File path = Environment.getDataDirectory();
         StatFs stat = new StatFs(path.getPath());
-        if (QASdkVersion.isSupport(QASdkVersionCodes.JELLY_BEAN_MR2)) {
+        if (QASdkVersion.isSupport(QASdkVersion.JELLY_BEAN_MR2)) {
             return stat.getAvailableBytes();
         } else {
             long availableBlocks = stat.getAvailableBlocks();
@@ -354,7 +354,7 @@ public final class QAFileManager {
     public static long getDataTotalSize() {
         File path = Environment.getDataDirectory();
         StatFs stat = new StatFs(path.getPath());
-        if (QASdkVersion.isSupport(QASdkVersionCodes.JELLY_BEAN_MR2)) {
+        if (QASdkVersion.isSupport(QASdkVersion.JELLY_BEAN_MR2)) {
             return stat.getTotalBytes();
         } else {
             long totalBlocks = stat.getBlockCount();
@@ -371,7 +371,7 @@ public final class QAFileManager {
     @SuppressWarnings("deprecation")
     @TargetApi(Build.VERSION_CODES.GINGERBREAD)
     public static long getUsableSpace(File path) {
-        if (QASdkVersion.isSupport(QASdkVersionCodes.GINGERBREAD)) {
+        if (QASdkVersion.isSupport(QASdkVersion.GINGERBREAD)) {
             return path.getUsableSpace();
         } else {
             StatFs stat = new StatFs(path.getPath());
@@ -386,7 +386,7 @@ public final class QAFileManager {
     @SuppressWarnings("deprecation")
     @TargetApi(Build.VERSION_CODES.GINGERBREAD)
     public static long getTotalSpace(File path) {
-        if (QASdkVersion.isSupport(QASdkVersionCodes.GINGERBREAD)) {
+        if (QASdkVersion.isSupport(QASdkVersion.GINGERBREAD)) {
             return path.getTotalSpace();
         } else {
             StatFs stat = new StatFs(path.getPath());

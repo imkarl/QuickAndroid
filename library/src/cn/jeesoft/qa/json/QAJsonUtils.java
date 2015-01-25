@@ -11,6 +11,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import cn.jeesoft.qa.QACore.QAPrivateCheck;
 import cn.jeesoft.qa.error.QAException;
 import cn.jeesoft.qa.error.QAJsonException;
 import cn.jeesoft.qa.error.QANullException;
@@ -29,6 +30,11 @@ import com.alibaba.fastjson.util.TypeUtils;
  * @version v0.1.0 king 2014-11-21 JSON序列/反序列
  */
 public class QAJsonUtils {
+
+    protected QAJsonUtils(QAPrivateCheck check) {
+    	QAPrivateCheck.check(check);
+    }
+    
     
     /**
      * 序列化

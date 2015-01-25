@@ -7,13 +7,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import cn.jeesoft.qa.utils.version.QASdkVersion;
-import cn.jeesoft.qa.utils.version.QASdkVersionCodes;
-
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.text.TextUtils;
+import cn.jeesoft.qa.QACore.QAPrivateCheck;
+import cn.jeesoft.qa.utils.version.QASdkVersion;
 
 /**
  * 字符串操作工具类
@@ -21,12 +20,17 @@ import android.text.TextUtils;
  */
 @SuppressLint("DefaultLocale")
 public class QAStringUtils {
+	
+	protected QAStringUtils(QAPrivateCheck check) {
+    	QAPrivateCheck.check(check);
+    }
+	
     public static final String URL_REG_EXPRESSION = "^(https?://)?([a-zA-Z0-9_-]+\\.[a-zA-Z0-9_-]+)+(/*[A-Za-z0-9/\\-_&:?\\+=//.%]*)*";
     public static final String EMAIL_REG_EXPRESSION = "\\w+(\\.\\w+)*@\\w+(\\.\\w+)+";
 	
     @TargetApi(Build.VERSION_CODES.GINGERBREAD)
     public static byte[] getBytes(String str, Charset charset) {
-        if (QASdkVersion.isSupport(QASdkVersionCodes.GINGERBREAD)) {
+        if (QASdkVersion.isSupport(QASdkVersion.GINGERBREAD)) {
             return str.getBytes(charset);
         } else {
             try {
@@ -39,7 +43,7 @@ public class QAStringUtils {
     
     @SuppressLint("NewApi")
 	public static String newString(byte[] data, int offset, int byteCount, Charset charset) {
-    	if (QASdkVersion.isSupport(QASdkVersionCodes.HONEYCOMB)) {
+    	if (QASdkVersion.isSupport(QASdkVersion.HONEYCOMB)) {
     		return new String(data, offset, byteCount, charset);
     	} else {
     		if ((offset | byteCount) < 0 || byteCount > data.length - offset) {
