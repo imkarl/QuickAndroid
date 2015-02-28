@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -18,6 +19,7 @@ import cn.jeesoft.qa.libcore.db.QADb.QADbListener;
 import cn.jeesoft.qa.libcore.db.QADbMaster;
 import cn.jeesoft.qa.libcore.http.QAHttpCallback;
 import cn.jeesoft.qa.libcore.http.QAHttpMethod;
+import cn.jeesoft.qa.simple.adapter.AdapterActivity;
 import cn.jeesoft.qa.simple.db.Note;
 import cn.jeesoft.qa.simple.db.NoteDao;
 import cn.jeesoft.qa.utils.log.QALog;
@@ -36,6 +38,16 @@ public class MainActivity extends ActionBarActivity {
             QACore.log.e(QACore.getApp());
             QACore.log.e(QACore.getConfig());
             QACore.log.e(QACore.getManager());
+            QACore.log.e(QACore.getHandler());
+            QACore.log.e();
+            QACore.log.e("日志一", "日志二", "日志三");
+
+            QACore.getHandler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    QACore.log.e(this);
+                }
+            }, 1000);
         } catch (QAException e) {
         	QACore.log.e(e);
         }
@@ -166,4 +178,10 @@ public class MainActivity extends ActionBarActivity {
         QACore.toast.show(this, "执行完成，请通过LogCat查看结果");
     }
 
+    /**
+     * 测试极简Adapter
+     */
+    public void testAdapter(View view) {
+        startActivity(new Intent(this, AdapterActivity.class));
+    }
 }
