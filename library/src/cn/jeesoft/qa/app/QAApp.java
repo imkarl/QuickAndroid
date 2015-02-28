@@ -1,6 +1,7 @@
 package cn.jeesoft.qa.app;
 
 import android.app.Application;
+import cn.jeesoft.qa.QACore;
 import cn.jeesoft.qa.QACore.QAPrivateCheck;
 
 /**
@@ -13,4 +14,10 @@ public class QAApp extends AppImpl {
 		super(check, app);
 	}
     
+	@Override
+	protected void onCreate() {
+	    super.onCreate();
+	    QACore.log.setCallNumber(4);
+	}
+	
 }
