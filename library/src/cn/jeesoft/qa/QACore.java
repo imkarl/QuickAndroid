@@ -8,7 +8,6 @@ import java.util.Map;
 import android.app.Application;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.os.Handler;
 import android.text.TextUtils;
 import cn.jeesoft.qa.app.QAApp;
 import cn.jeesoft.qa.config.DefaultConfig;
@@ -20,6 +19,7 @@ import cn.jeesoft.qa.error.QANullException;
 import cn.jeesoft.qa.libcore.db.DefaultDb;
 import cn.jeesoft.qa.libcore.db.QADb;
 import cn.jeesoft.qa.libcore.db.QADb.QADbListener;
+import cn.jeesoft.qa.libcore.handle.QAHandle;
 import cn.jeesoft.qa.libcore.http.DefaultHttp;
 import cn.jeesoft.qa.libcore.http.QAHttp;
 import cn.jeesoft.qa.libcore.image.DefaultImage;
@@ -130,7 +130,7 @@ public class QACore implements QACoreUtils {
 	public static QAActivityManager getManager() {
 		return QAApp.getManager();
 	}
-	public static Handler getHandler() {
+	public static QAHandle getHandler() {
 	    return QAApp.getHandler();
 	}
     

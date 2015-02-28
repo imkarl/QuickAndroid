@@ -1,10 +1,10 @@
 package cn.jeesoft.qa.app;
 
+import android.app.Application;
 import cn.jeesoft.qa.QACore.QAPrivateCheck;
+import cn.jeesoft.qa.libcore.handle.QAHandle;
 import cn.jeesoft.qa.utils.QAAppUtils;
 import cn.jeesoft.qa.utils.QAAppUtils.QAAppInfo;
-import android.app.Application;
-import android.os.Handler;
 
 /**
  * {@link cn.jeesoft.qa.app.App}的拓展增强实现
@@ -12,7 +12,7 @@ import android.os.Handler;
  */
 abstract class AppImpl extends App {
     
-    private static Handler StaticHandler = new Handler();
+    private static QAHandle StaticHandler = new QAHandle();
 
 	public AppImpl(QAPrivateCheck check, Application app) {
 		super(check, app);
@@ -49,7 +49,7 @@ abstract class AppImpl extends App {
         return QAAppUtils.getCurrentAppInfo(getApplication());
     }
     
-    public static Handler getHandler() {
+    public static QAHandle getHandler() {
         return StaticHandler;
     }
     
