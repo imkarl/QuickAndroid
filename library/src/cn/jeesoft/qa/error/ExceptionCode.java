@@ -54,6 +54,8 @@ interface ExceptionCode {
     public static final int CODE_READ_ONLY = 1013;
     /** 不允许 */
     public static final int CODE_NO_ALLOW = 1014;
+    /** 非法状态 */
+    public static final int CODE_ILLEGAL_STATE = 1015;
     
 
     
