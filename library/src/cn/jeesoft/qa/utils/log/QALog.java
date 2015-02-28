@@ -21,28 +21,36 @@ public class QALog extends Log {
     
     
     /**
-     * 设置自定义Log
+     * 自定义Log
      */
     public static QASelfLog selfLog;
     private static String TAG;
+    private static Integer CALL_NUMBER = 3;
 	
     /**
      * 设置TAG
      * @param tag
      */
-    protected static void setTag(String tag) {
+    public static void setTag(String tag) {
         QALog.TAG = tag;
     }
     /**
      * 获取TAG
      * @return
      */
-    protected static String getTag() {
+    private static String getTag() {
         if (!TextUtils.isEmpty(TAG)) {
             return TAG;
         } else {
-            return getStackTraceInfo(3);
+            return getStackTraceInfo(CALL_NUMBER);
         }
+    }
+    /**
+     * 设置调用次数
+     * @param callNumber
+     */
+    public static void setCallNumber(int callNumber) {
+        CALL_NUMBER = callNumber;
     }
     
     
