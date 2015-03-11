@@ -28,12 +28,17 @@ abstract class Exception extends RuntimeException {
         this.code = code;
     }
     
+    
     @Override
     public String toString() {
         String msg = this.getLocalizedMessage();
         msg = (TextUtils.isEmpty(msg) ? "" : msg);
         
         String name = QAClassUtils.getShortClassName(this.getClass());
+        
+        if (getCause() instanceof QAException) {
+            return name + "=>" + msg + String.format("[异常码:%s]", this.getCode());
+        }
         
         return name + ": " + msg + String.format("[异常码:%s]", this.getCode());
     }

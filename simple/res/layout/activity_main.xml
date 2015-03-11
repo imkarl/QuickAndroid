@@ -22,8 +22,18 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="60dip"
-        android:text="@string/btn_test_http"
+        android:text="@string/btn_test_http_image"
         android:onClick="testHttpImage" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="60dip"
+        android:text="@string/btn_test_http_parser"
+        android:onClick="testHttpParser" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="60dip"
+        android:text="@string/btn_test_http_file"
+        android:onClick="testHttpFile" />
     <Button
         android:layout_width="wrap_content"
         android:layout_height="60dip"

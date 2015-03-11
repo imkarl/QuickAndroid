@@ -1,12 +1,10 @@
 package cn.jeesoft.qa.simple.test;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import cn.jeesoft.qa.QACore;
 import cn.jeesoft.qa.error.QAException;
 import cn.jeesoft.qa.libcore.http.QAHttpCallback;
 import cn.jeesoft.qa.libcore.http.QAHttpMethod;
+import cn.jeesoft.qa.libcore.http.QARequestParams;
 import cn.jeesoft.qa.utils.log.QALog;
 
 public class TestHttp extends BaseTestCase {
@@ -19,9 +17,8 @@ public class TestHttp extends BaseTestCase {
         QALog.e(getApplication());
         
         QACore.initApp(getApplication());
-        
         String url = "http://www.baidu.com/s";
-        Map<String, String> params = new HashMap<String, String>();
+        QARequestParams params = new QARequestParams();
         params.put("wd", "android");
         QAHttpCallback<String> listener = new QAHttpCallback<String>() {
             @Override

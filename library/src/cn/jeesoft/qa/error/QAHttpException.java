@@ -1,49 +1,36 @@
 package cn.jeesoft.qa.error;
 
-import com.android.volley.NetworkResponse;
-
 /**
  * HTTP异常
  * @version v0.1.0 king 2015-01-12 HTTP异常
+ * @version v0.1.1 king 2015-03-10 去除Volley部分，重新实现
  */
 public class QAHttpException extends QAException {
     private static final long serialVersionUID = 1L;
 
-    private final NetworkResponse response;
-    private long networkTimeMs;
+    private final int statusCode;
 
-
-    public QAHttpException(int code, NetworkResponse response) {
-        super(code);
-        this.response = response;
-    }
-    public QAHttpException(int code, String message, NetworkResponse response) {
+    public QAHttpException(int code, int statusCode, String message) {
         super(code, message);
-        this.response = response;
+        this.statusCode = statusCode;
     }
-    public QAHttpException(int code, String message, Throwable throwable, NetworkResponse response) {
-        super(code, message, throwable);
-        this.response = response;
+    public QAHttpException(int code, int statusCode, Throwable error) {
+        super(code, error);
+        this.statusCode = statusCode;
     }
-    public QAHttpException(int code, Throwable throwable, NetworkResponse response) {
-        super(code, throwable);
-        this.response = response;
+    public QAHttpException(int code, int statusCode, String message, Throwable error) {
+        super(code, message, error);
+        this.statusCode = statusCode;
     }
     
     
     
-    
+    /**
+     * 获取HTTP状态码
+     * @return HTTP状态码（200:正常）
+     */
     public int getHttpStatusCode() {
-        if (this.response == null) {
-            return -1;
-        }
-        return this.response.statusCode;
-    }
-    public long getNetworkTimeMs() {
-       return networkTimeMs;
-    }
-    public NetworkResponse getNetworkResponse() {
-        return this.response;
+        return this.statusCode;
     }
     
 }

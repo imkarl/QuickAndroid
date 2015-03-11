@@ -6,6 +6,8 @@
     <string name="btn_test_exception">测试异常拦截</string>
     <string name="btn_test_http">测试HTTP请求</string>
     <string name="btn_test_http_image">测试HTTP请求（Bitmap）</string>
+    <string name="btn_test_http_parser">测试HTTP请求（Parser）</string>
+    <string name="btn_test_http_file">测试HTTP请求（File）</string>
     <string name="btn_test_image">测试Image图片加载</string>
     <string name="btn_test_db">测试DB读写</string>
     <string name="btn_test_adapter">测试极简Adapter</string>

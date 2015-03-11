@@ -1,9 +1,6 @@
 package cn.jeesoft.qa.libcore.http;
 
-import java.util.Map;
-
-import cn.jeesoft.qa.json.QAJson;
-import cn.jeesoft.qa.libcore.http.request.QARequest;
+import android.content.Context;
 
 /**
  * HTTP网络请求
@@ -12,44 +9,30 @@ import cn.jeesoft.qa.libcore.http.request.QARequest;
  */
 public interface QAHttp {
 
-    /**
-     * 添加指定的请求到RequestQueue,可以指定标签，否则使用默认标签
-     */
-    public void load(String tag, QARequest<?> request);
+    public <T> void load(Context context, QAHttpMethod method,
+            String url, QARequestParams params, QAHttpCallback<T> listener);
     
-    /**
-     * 添加指定的请求到RequestQueue,可以指定标签，否则使用默认标签
-     */
-    public void load(QARequest<?> request);
+    public <T> void load(Context context, QAHttpMethod method,
+            String url, QARequestParams params,
+            QAStringParser<T> parser, QAHttpCallback<T> listener);
+    
+    public <T> void load(Context context, QAHttpMethod method,
+            String url, QARequestParams params,
+            QAJsonParser<T> parser, QAHttpCallback<T> listener);
     
     /**
      * 发送网络请求
      * @param method
      * @param url 请求的URL
      * @param params
-     * @param parser
      * @param listener
      */
-    public <V, P extends QAParser<V, QAJson>> void load(QAHttpMethod method,
-            String url,
-            Map<String, String> params,
-            P parser,
-            QAHttpCallback<V> listener);
-    /**
-     * 发送网络请求
-     * 
-     * <pre>
-     * 仅支持String/QAJson/File/Bitmap
-     * </pre>
-     * 
-     * @param method
-     * @param url 请求的URL
-     * @param params
-     * @param listener
-     */
-    public <V> void load(QAHttpMethod method,
-            String url,
-            Map<String, String> params,
-            QAHttpCallback<V> listener);
+    public <T> void load(QAHttpMethod method, String url, QARequestParams params, QAHttpCallback<T> listener);
+
+    public <T> void load(String url, QARequestParams params, QAHttpCallback<T> listener);
+
+    public <T> void load(QAHttpMethod method, String url, QAHttpCallback<T> listener);
+
+    public <T> void load(String url, QAHttpCallback<T> listener);
     
 }

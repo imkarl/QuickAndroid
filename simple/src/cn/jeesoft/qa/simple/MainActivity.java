@@ -1,8 +1,7 @@
 package cn.jeesoft.qa.simple;
 
+import java.io.File;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -14,11 +13,14 @@ import android.view.View;
 import cn.jeesoft.qa.QACore;
 import cn.jeesoft.qa.error.QAException;
 import cn.jeesoft.qa.json.QAJson;
+import cn.jeesoft.qa.json.QAJsonObject;
 import cn.jeesoft.qa.libcore.db.QADb;
 import cn.jeesoft.qa.libcore.db.QADb.QADbListener;
 import cn.jeesoft.qa.libcore.db.QADbMaster;
 import cn.jeesoft.qa.libcore.http.QAHttpCallback;
 import cn.jeesoft.qa.libcore.http.QAHttpMethod;
+import cn.jeesoft.qa.libcore.http.QAJsonParser;
+import cn.jeesoft.qa.libcore.http.QARequestParams;
 import cn.jeesoft.qa.simple.adapter.AdapterActivity;
 import cn.jeesoft.qa.simple.db.Note;
 import cn.jeesoft.qa.simple.db.NoteDao;
@@ -72,7 +74,7 @@ public class MainActivity extends ActionBarActivity {
      */
     public void testHttp(View view) {
         String url = "http://www.baidu.com/s";
-        Map<String, String> params = new HashMap<String, String>();
+        QARequestParams params = new QARequestParams();
         params.put("wd", "android");
         QAHttpCallback<QAJson> listener = new QAHttpCallback<QAJson>() {
             @Override
@@ -99,7 +101,100 @@ public class MainActivity extends ActionBarActivity {
             }
         };
         
-        QACore.getHttp().load(QAHttpMethod.GET, url, null, listener);
+        QACore.getHttp().load(QAHttpMethod.GET, url, params, listener);
+    }
+    
+    /**
+     * 测试HTTP请求（Parser）
+     */
+    public void testHttpParser(final View view) {
+        String url = "http://www.kuaidi100.com/query";
+        
+        QARequestParams params = new QARequestParams();
+        params.put("type", "快递公司代号");
+        params.put("postid", "快递单号");
+        
+        /**
+         * 快递单信息
+         */
+        class Express implements QAJsonParser<Express> {
+            int status;
+            String message;
+            
+            @Override
+            public Express parser(QAJson data) {
+                QAJsonObject root = (QAJsonObject) data;
+                this.status = root.getInt("status");
+                this.message = root.getString("message");
+                return this;
+            }
+
+            @Override
+            public String toString() {
+                return "Express [status=" + status + ", message=" + message + "]";
+            }
+        }
+        
+        QAHttpCallback<Express> listener = new QAHttpCallback<Express>() {
+            @Override
+            public void onStart(String url) {
+                QALog.e(url, "onStart");
+            }
+            @Override
+            public void onCancel(String url) {
+                QALog.e(url, "onCancel");
+            }
+            @Override
+            public void onSuccessNet(String url, Express data) {
+                QALog.e(url, "onSuccessNet", data);
+            }
+            // TODO 暂未实现
+            @Override
+            public void onSuccessCache(String url, Express data) {
+                QALog.e(url, "onSuccessCache", data);
+            }
+            @Override
+            public void onFail(String url, QAException exception) {
+                QALog.e(url, "onFail", exception);
+            }
+        };
+        
+        QACore.getHttp().load(null, QAHttpMethod.GET, url, params, new Express(), listener);
+    }
+    /**
+     * 测试HTTP请求（File）
+     */
+    public void testHttpFile(final View view) {
+        String url = "https://github.com/alafighting/QuickAndroid/archive/master.zip";
+        
+        QARequestParams params = new QARequestParams();
+        params.setTargetFile(new File(QACore.file.getUsableDir(getPackageName()), "QuickAndroid-master.zip"));
+        
+        QAHttpCallback<File> listener = new QAHttpCallback<File>() {
+            @Override
+            public void onStart(String url) {
+                QALog.e(url, "onStart");
+            }
+            @Override
+            public void onCancel(String url) {
+                QALog.e(url, "onCancel");
+            }
+            @Override
+            public void onSuccessNet(String url, File data) {
+                QALog.e(url, "onSuccessNet", data);
+            }
+            // TODO 暂未实现
+            @Override
+            public void onSuccessCache(String url, File data) {
+                QALog.e(url, "onSuccessCache", data);
+            }
+            @Override
+            public void onFail(String url, QAException exception) {
+                QALog.e(url, "onFail", exception);
+            }
+        };
+        
+        QACore.getHttp().load(QAHttpMethod.GET, url, params, listener);
     }
     
     /**
@@ -107,7 +202,7 @@ public class MainActivity extends ActionBarActivity {
      */
     public void testHttpImage(final View view) {
         String url = "https://raw.githubusercontent.com/alafighting/QuickAndroid/master/library/res/drawable-hdpi/qa_ic_logo.png";
-      
+        
         QAHttpCallback<Bitmap> listener = new QAHttpCallback<Bitmap>() {
             @Override
             public void onStart(String url) {

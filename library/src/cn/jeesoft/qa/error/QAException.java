@@ -1,9 +1,7 @@
 package cn.jeesoft.qa.error;
 
-import cn.jeesoft.qa.libcore.http.request.QAVolleyError;
+import java.net.UnknownHostException;
 
-import com.alibaba.fastjson.JSONException;
-import com.android.volley.VolleyError;
 
 /**
  * 全局异常
@@ -30,33 +28,23 @@ public class QAException extends Exception implements ExceptionCode {
     /**
      * 生成QAException实例
      */
-    public static QAException make(java.lang.Exception exception) {
+    public static QAException make(java.lang.Throwable exception) {
         if (exception == null) {
             return null;
         }
         
-        if (exception instanceof VolleyError) {
-            VolleyError volleyError = (VolleyError) exception;
-            if (exception instanceof QAVolleyError
-                    && ((QAVolleyError) volleyError).getCause() instanceof QAException) {
-                    return (QAException) ((QAVolleyError) volleyError).getCause();
-            } else {
-                return new QAHttpException(QAException.CODE_UNKNOW,
-                        volleyError.getCause(),
-                        volleyError.networkResponse);
-            }
+        if (exception instanceof NullPointerException) {
+            return new QANullException(exception.getMessage(), exception.getCause());
+        } else if (exception instanceof com.alibaba.fastjson.JSONException
+                || exception instanceof org.json.JSONException) {
+            return new QAJsonException(QAException.CODE_FORMAT, exception.getMessage(), exception.getCause());
+        } else if (exception instanceof UnknownHostException) {
+            return new QAHttpException(QAException.CODE_FORMAT, -1, exception);
         } else {
-            if (exception instanceof NullPointerException) {
-                return new QANullException(exception.getMessage(), exception.getCause());
-            } else if (exception instanceof JSONException || exception instanceof org.json.JSONException) {
-                return new QAJsonException(QAException.CODE_FORMAT, exception.getMessage(), exception.getCause());
-            } else {
-                // TODO 未细化处理
-                return new QAException(QAException.CODE_UNKNOW, exception.getMessage(), exception.getCause());
-            }
+            // TODO 未细化处理
+            return new QAException(QAException.CODE_UNKNOW, exception.getMessage(), exception.getCause());
         }
     }
-    
     
     
 }
