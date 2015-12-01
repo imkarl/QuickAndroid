@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical" >
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_test_exception"
+        android:onClick="testException" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_test_http"
+        android:onClick="testHttp" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="60dip"
+        android:text="@string/btn_test_http_image"
+        android:onClick="testHttpImage" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="60dip"
+        android:text="@string/btn_test_http_parser"
+        android:onClick="testHttpParser" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="60dip"
+        android:text="@string/btn_test_http_file"
+        android:onClick="testHttpFile" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="60dip"
+        android:text="@string/btn_test_image"
+        android:onClick="testImage" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_test_db"
+        android:onClick="testDb" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_test_adapter"
+        android:onClick="testAdapter" />
+
+</LinearLayout>
