@@ -6,12 +6,12 @@
 * 本框架QuickAndroid（以下简称：QA）尚处于开发阶段。
 * 本项目的宗旨是：整合一个快速、完善的Android开发框架。
 
-  > * 编译工具使用：Eclipse + ADT + Android SDK；
-  > * 编译环境是Android 5.0（21），最低支持Android 2.2（8）；
-  > * 项目编码采用；UTF-8，源码带有中文注释；
-  > * 框架依赖于appcompat_v7，已附带未修改版，可自行替换；
-  > * 为避免重复造轮子，功能模块优先考虑现有的国内外成熟开源框架；
-  > * 框架本身尽量避免复写其它开源框架，以便跟随他们的版本升级。
+  > * 编译工具使用：Android Studio
+  > * 编译环境：Android 6.0（API level 23）、gradle:2.0.0-alpha1
+  > * 最低支持版本：Android 3.0（API level 11）
+  > * 项目编码采用；UTF-8
+  > * 为避免重复造轮子，功能模块优先考虑现有的国内外成熟开源框架
+  > * 框架本身尽量避免复写其它开源框架，以便跟随他们的版本升级
 
 
 ##QA使用说明
@@ -22,13 +22,21 @@
 * QA内部抛出的异常，均为QAException的子类。
 
 
-##QA工程说明
-> * library   —— 框架代码
-> * simple    —— 演示程序
+##QA工程目录
+> * quickandroid   — 框架代码
+> * sample         — 演示程序
+
+
+##引用库
+* [fastjson](https://github.com/alibaba/fastjson) 高效的JSON处理器
+* [greenDAO](https://github.com/greenrobot/greenDAO) SQLite快速的轻量级ORM
+* [android-weak-handler](https://github.com/badoo/android-weak-handler) 内存安全的Handler，防止内存泄漏
+* [okhttp](https://github.com/square/okhttp) 支持HTTP和SPDY的网络请求库
+* [universal-image-loader](https://github.com/nostra13/Android-Universal-Image-Loader) 高效的图片处理库
 
 
 ## 关于作者
-* 作 者： 壳　　“一个酷爱Coding的平凡码农”
+* 作 者： 壳
 * Email： <alafighting@163.com>
 * 有任何问题或建议，欢迎联系我...
 * 你也可以加入QQ群：432563131（QuickAndroid交流群）
