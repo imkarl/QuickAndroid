@@ -1,7 +1,5 @@
 package cn.jeesoft.qa.libcore.http;
 
-import android.content.Context;
-
 /**
  * HTTP网络请求
  * @version v0.1.1 king 2015-01-14 定义接口

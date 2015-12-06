@@ -77,6 +77,8 @@ public class QALog extends Log {
         String threadName = Thread.currentThread().getName();
         if (!TextUtils.isEmpty(threadName) && threadName.equals("Instr: android.test.InstrumentationTestRunner")) {
             threadName = "Instr: AndroidTestCase";
+        } else if (!TextUtils.isEmpty(threadName) && threadName.startsWith("OkHttp ")) {
+            threadName = "OkHttp";
         }
         return threadName;
     }

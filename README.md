@@ -29,7 +29,7 @@
 
 ##引用库
 * [fastjson](https://github.com/alibaba/fastjson) 高效的JSON处理器
-* [greenDAO](https://github.com/greenrobot/greenDAO) SQLite快速的轻量级ORM
+* [greenDAO](https://github.com/greenrobot/greenDAO) 高效的轻量级ORM[SQLite]
 * [android-weak-handler](https://github.com/badoo/android-weak-handler) 内存安全的Handler，防止内存泄漏
 * [okhttp](https://github.com/square/okhttp) 支持HTTP和SPDY的网络请求库
 * [universal-image-loader](https://github.com/nostra13/Android-Universal-Image-Loader) 高效的图片处理库

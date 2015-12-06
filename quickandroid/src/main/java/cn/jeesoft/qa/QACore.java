@@ -9,6 +9,9 @@ import android.app.Application;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
+import android.view.Display;
+
 import cn.jeesoft.qa.app.QAApp;
 import cn.jeesoft.qa.config.DefaultConfig;
 import cn.jeesoft.qa.config.QAConfig;
@@ -247,12 +250,28 @@ public class QACore implements QACoreUtils {
         }
         return db;
     }
-    
-    
-    
-    
-    
-	/**
+
+
+    private static DisplayMetrics metrics;
+    public static DisplayMetrics getDisplayMetrics() {
+        if (metrics == null) {
+            Display display = QACore.getManager().currentActivity().getWindowManager().getDefaultDisplay();
+            metrics = new DisplayMetrics();
+            display.getMetrics(metrics);
+        }
+        return metrics;
+    }
+    public static int getDisplayWidthPixels() {
+        return getDisplayMetrics().widthPixels;
+    }
+    public static int getDisplayHeightPixels() {
+        return getDisplayMetrics().heightPixels;
+    }
+
+
+
+
+    /**
 	 * 退出应用程序
 	 */
 	public static void exitApp() {

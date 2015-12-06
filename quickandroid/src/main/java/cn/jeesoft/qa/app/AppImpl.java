@@ -1,6 +1,8 @@
 package cn.jeesoft.qa.app;
 
 import android.app.Application;
+import android.os.Looper;
+
 import cn.jeesoft.qa.QACore.QAPrivateCheck;
 import cn.jeesoft.qa.libcore.handle.QAHandle;
 import cn.jeesoft.qa.utils.QAAppUtils;
@@ -12,7 +14,7 @@ import cn.jeesoft.qa.utils.QAAppUtils.QAAppInfo;
  */
 abstract class AppImpl extends App {
     
-    private static QAHandle StaticHandler = new QAHandle();
+    private static QAHandle StaticHandler = new QAHandle(Looper.getMainLooper());
 
 	public AppImpl(QAPrivateCheck check, Application app) {
 		super(check, app);

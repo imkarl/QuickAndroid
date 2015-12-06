@@ -17,13 +17,17 @@ import cn.jeesoft.qa.json.QAJson;
 import cn.jeesoft.qa.json.QAJsonObject;
 import cn.jeesoft.qa.libcore.db.QADb;
 import cn.jeesoft.qa.libcore.db.QADbMaster;
+import cn.jeesoft.qa.libcore.http.QAHttpAction;
 import cn.jeesoft.qa.libcore.http.QAHttpCallback;
 import cn.jeesoft.qa.libcore.http.QAHttpMethod;
 import cn.jeesoft.qa.libcore.http.QAJsonParser;
 import cn.jeesoft.qa.libcore.http.QARequestParams;
+import cn.jeesoft.qa.libcore.http.QASimpleHttpCallback;
 import cn.jeesoft.qa.sample.adapter.AdapterActivity;
 import cn.jeesoft.qa.sample.db.Note;
 import cn.jeesoft.qa.sample.db.NoteDao;
+import cn.jeesoft.qa.ui.uikit.QAToast;
+import cn.jeesoft.qa.utils.lang.QAStringUtils;
 import cn.jeesoft.qa.utils.log.QALog;
 
 public class MainActivity extends AppCompatActivity {
@@ -74,33 +78,20 @@ public class MainActivity extends AppCompatActivity {
     public void testHttp(View view) {
         String url = "http://www.baidu.com/s";
         QARequestParams params = new QARequestParams();
-        params.put("wd", "android");
-        QAHttpCallback<QAJson> listener = new QAHttpCallback<QAJson>() {
+        params.putParam("wd", "android");
+        QAHttpCallback<String> listener = new QASimpleHttpCallback<String>() {
             @Override
-            public void onStart(String url) {
-                QALog.e(url, "onStart");
+            public void onProgress(String url, long current, long total, QAHttpAction action) {
+                super.onProgress(url, current, total, action);
+                QAToast.show(MainActivity.this, "onProgress | "+action+" | "+current+"/"+total);
             }
             @Override
-            public void onCancel(String url) {
-                QALog.e(url, "onCancel");
+            public void onSuccessNet(String url, String data) {
+                QALog.e(url, "onSuccessNet " + data);
             }
             @Override
-            public void onProgress(String url, long current, long total) {
-                QALog.e(url, "onProgress "+current+"/"+total);
-            }
-            // data不会为NULL
-            @Override
-            public void onSuccessNet(String url, QAJson data) {
-                QALog.e(url, "onSuccessNet", data.getClass());
-            }
-            // TODO 暂未实现
-            @Override
-            public void onSuccessCache(String url, QAJson data) {
-                QALog.e(url, "onSuccessCache", data.getClass());
-            }
-            @Override
-            public void onFail(String url, QAException exception) {
-                QALog.e(url, "onFail", exception);
+            public void onSuccessCache(String url, String data) {
+                QALog.e(url, "onSuccessCache " + data);
             }
         };
 
@@ -114,8 +105,8 @@ public class MainActivity extends AppCompatActivity {
         String url = "http://www.kuaidi100.com/query";
 
         QARequestParams params = new QARequestParams();
-        params.put("type", "快递公司代号");
-        params.put("postid", "快递单号");
+        params.putParam("type", "快递公司代号");
+        params.putParam("postid", "快递单号");
 
         /**
          * 快递单信息
@@ -138,31 +129,19 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        QAHttpCallback<Express> listener = new QAHttpCallback<Express>() {
+        QAHttpCallback<Express> listener = new QASimpleHttpCallback<Express>() {
             @Override
-            public void onStart(String url) {
-                QALog.e(url, "onStart");
-            }
-            @Override
-            public void onCancel(String url) {
-                QALog.e(url, "onCancel");
-            }
-            @Override
-            public void onProgress(String url, long current, long total) {
-                QALog.e(url, "onProgress "+current+"/"+total);
+            public void onProgress(String url, long current, long total, QAHttpAction action) {
+                super.onProgress(url, current, total, action);
+                QAToast.show(MainActivity.this, "onProgress | "+action+" | "+current+"/"+total);
             }
             @Override
             public void onSuccessNet(String url, Express data) {
                 QALog.e(url, "onSuccessNet", data);
             }
-            // TODO 暂未实现
             @Override
             public void onSuccessCache(String url, Express data) {
                 QALog.e(url, "onSuccessCache", data);
-            }
-            @Override
-            public void onFail(String url, QAException exception) {
-                QALog.e(url, "onFail", exception);
             }
         };
 
@@ -177,31 +156,20 @@ public class MainActivity extends AppCompatActivity {
         QARequestParams params = new QARequestParams();
         params.setTargetFile(new File(QACore.file.getUsableDir(getPackageName()), "QuickAndroid-master.zip"));
 
-        QAHttpCallback<File> listener = new QAHttpCallback<File>() {
+        QAHttpCallback<File> listener = new QASimpleHttpCallback<File>() {
             @Override
-            public void onStart(String url) {
-                QALog.e(url, "onStart");
-            }
-            @Override
-            public void onCancel(String url) {
-                QALog.e(url, "onCancel");
-            }
-            @Override
-            public void onProgress(String url, long current, long total) {
-                QALog.e(url, "onProgress "+current+"/"+total);
+            public void onProgress(String url, long current, long total, QAHttpAction action) {
+                super.onProgress(url, current, total, action);
+                QAToast.show(MainActivity.this, "onProgress | "+action+" | "
+                        +(total!=-1 ? QAStringUtils.getDecimal(100D*current/total, 2) : (QAStringUtils.getDecimal(1D*current/1024, 2)+"kb")));
             }
             @Override
             public void onSuccessNet(String url, File data) {
                 QALog.e(url, "onSuccessNet", data);
             }
-            // TODO 暂未实现
             @Override
             public void onSuccessCache(String url, File data) {
                 QALog.e(url, "onSuccessCache", data);
-            }
-            @Override
-            public void onFail(String url, QAException exception) {
-                QALog.e(url, "onFail", exception);
             }
         };
 
@@ -212,20 +180,13 @@ public class MainActivity extends AppCompatActivity {
      * 测试HTTP请求（Bitmap）
      */
     public void testHttpImage(final View view) {
-        String url = "https://raw.githubusercontent.com/alafighting/QuickAndroid/master/library/res/drawable-hdpi/qa_ic_logo.png";
+        String url = "http://p1.sinaimg.cn/2813897512/180/42911348395710";
 
-        QAHttpCallback<Bitmap> listener = new QAHttpCallback<Bitmap>() {
+        QAHttpCallback<Bitmap> listener = new QASimpleHttpCallback<Bitmap>() {
             @Override
-            public void onStart(String url) {
-                QALog.e(url, "onStart");
-            }
-            @Override
-            public void onCancel(String url) {
-                QALog.e(url, "onCancel");
-            }
-            @Override
-            public void onProgress(String url, long current, long total) {
-                QALog.e(url, "onProgress "+current+"/"+total);
+            public void onProgress(String url, long current, long total, QAHttpAction action) {
+                super.onProgress(url, current, total, action);
+                QAToast.show(MainActivity.this, "onProgress | "+action+" | "+current+"/"+total);
             }
             @SuppressWarnings("deprecation")
             @Override
@@ -234,15 +195,6 @@ public class MainActivity extends AppCompatActivity {
 
                 // 设置按钮的背景图片
                 view.setBackgroundDrawable(new BitmapDrawable(getResources(), data));
-            }
-            // TODO 暂未实现
-            @Override
-            public void onSuccessCache(String url, Bitmap data) {
-                QALog.e(url, "onSuccessCache", data);
-            }
-            @Override
-            public void onFail(String url, QAException exception) {
-                QALog.e(url, "onFail", exception);
             }
         };
 

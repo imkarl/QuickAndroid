@@ -1,7 +1,5 @@
 package cn.jeesoft.qa.libcore.http;
 
-import android.content.Context;
-
 import java.util.Arrays;
 
 import cn.jeesoft.qa.QACore;
@@ -9,8 +7,8 @@ import cn.jeesoft.qa.QACore.QAPrivateCheck;
 import cn.jeesoft.qa.error.QAException;
 import cn.jeesoft.qa.error.QANoFoundException;
 import cn.jeesoft.qa.json.QAJson;
+import cn.jeesoft.qa.libcore.http.okhttp.OkHttp;
 import cn.jeesoft.qa.utils.lang.QAClassUtils;
-import cn.jeesoft.qa.utils.lang.QAStringUtils;
 import cn.jeesoft.qa.utils.log.QALog;
 
 /**
@@ -19,31 +17,32 @@ import cn.jeesoft.qa.utils.log.QALog;
  * @version v0.1.0 king 2015-01-10 HTTP网络请求包装
  */
 public class DefaultHttp implements QAHttp {
-    
-    private HttpClient mHttpClient;
-    
+
+    private OkHttp mOkHttp;
+
     public DefaultHttp(QAPrivateCheck check) {
         super();
         QAPrivateCheck.check(check);
     }
 
     /**
-     * 获取HttpClient
+     * 获取OkHttp
      */
-    private HttpClient getHttpClient() {
-        if (mHttpClient == null) {
+    private OkHttp getOkHttp() {
+        if (mOkHttp == null) {
             synchronized (this) {
-                if (mHttpClient == null) {
-                    mHttpClient = new HttpClient();
+                if (mOkHttp == null) {
+                    mOkHttp = new OkHttp();
                 }
             }
         }
-        return mHttpClient;
+        return mOkHttp;
     }
+    
     
 
     public <T> void load(QAHttpMethod method, String url, QARequestParams params, QAHttpCallback<T> listener) {
-        getHttpClient().load(method, url, params, listener);
+    	getOkHttp().load(method, url, params, listener);
     }
 
     public <T> void load(String url, QARequestParams params, QAHttpCallback<T> listener) {
@@ -59,15 +58,81 @@ public class DefaultHttp implements QAHttp {
     }
 
     public <T> void load(QAHttpMethod method,
-            String url, QARequestParams params,
-            QAStringParser<T> parser, QAHttpCallback<T> listener) {
-        getHttpClient().load(method, url, params, parser, listener);
+                         String url, QARequestParams params,
+                         final QAStringParser<T> parser, final QAHttpCallback<T> listener) {
+        if (listener == null) {
+            return;
+        }
+
+    	getOkHttp().load(method, url, params, new QAHttpCallback<String>() {
+            @Override
+            public void onCancel(String url) {
+                listener.onCancel(url);
+            }
+            @Override
+            public void onSuccessCache(String url, String data) {
+                try {
+                    listener.onSuccessCache(url, parser.parser(data));
+                } catch (Exception e) {
+                    listener.onFail(url, QAException.make(e));
+                }
+            }
+            @Override
+            public void onSuccessNet(String url, String data) {
+                try {
+                    listener.onSuccessNet(url, parser.parser(data));
+                } catch (Exception e) {
+                    listener.onFail(url, QAException.make(e));
+                }
+            }
+            @Override
+            public void onFail(String url, QAException exception) {
+                listener.onFail(url, exception);
+            }
+            @Override
+            public void onProgress(String url, long current, long total, QAHttpAction action) {
+                listener.onProgress(url, current, total, action);
+            }
+        });;
     }
     
     public <T> void load(QAHttpMethod method,
-            String url, QARequestParams params,
-            QAJsonParser<T> parser, QAHttpCallback<T> listener) {
-        getHttpClient().load(method, url, params, parser, listener);
+                         String url, QARequestParams params,
+                         final QAJsonParser<T> parser, final QAHttpCallback<T> listener) {
+        if (listener == null) {
+            return;
+        }
+
+        getOkHttp().load(method, url, params, new QAHttpCallback<QAJson>() {
+            @Override
+            public void onCancel(String url) {
+                listener.onCancel(url);
+            }
+            @Override
+            public void onSuccessCache(String url, QAJson data) {
+                try {
+                    listener.onSuccessCache(url, parser.parser(data));
+                } catch (Exception e) {
+                    listener.onFail(url, QAException.make(e));
+                }
+            }
+            @Override
+            public void onSuccessNet(String url, QAJson data) {
+                try {
+                    listener.onSuccessNet(url, parser.parser(data));
+                } catch (Exception e) {
+                    listener.onFail(url, QAException.make(e));
+                }
+            }
+            @Override
+            public void onFail(String url, QAException exception) {
+                listener.onFail(url, exception);
+            }
+            @Override
+            public void onProgress(String url, long current, long total, QAHttpAction action) {
+                listener.onProgress(url, current, total, action);
+            }
+        });;
     }
 
 
