@@ -8,7 +8,7 @@ import cn.jeesoft.qa.json.QAJson;
 import cn.jeesoft.qa.json.QAJsonObject;
 import cn.jeesoft.qa.json.QAJsonUtils;
 
-public class QAJSONObjectHttpHandler implements QAHttpHandler<JSONObject> {
+public class QAJsonObjectHttpHandler implements QAHttpHandler<JSONObject> {
 	
 	@Override
 	public JSONObject handlerResponse(Response response) throws Exception {

@@ -9,7 +9,7 @@ import cn.jeesoft.qa.json.QAJson;
 import cn.jeesoft.qa.json.QAJsonObject;
 import cn.jeesoft.qa.json.QAJsonUtils;
 
-public class QAJSONArrayHttpHandler implements QAHttpHandler<JSONArray> {
+public class QAJsonArrayHttpHandler implements QAHttpHandler<JSONArray> {
 	
 	@Override
 	public JSONArray handlerResponse(Response response) throws Exception {

@@ -35,8 +35,8 @@ import cn.jeesoft.qa.libcore.http.handler.QABimtapHttpHandler;
 import cn.jeesoft.qa.libcore.http.handler.QAFastJsonHttpHandler;
 import cn.jeesoft.qa.libcore.http.handler.QAFileHttpHandler;
 import cn.jeesoft.qa.libcore.http.handler.QAHttpHandler;
-import cn.jeesoft.qa.libcore.http.handler.QAJSONArrayHttpHandler;
-import cn.jeesoft.qa.libcore.http.handler.QAJSONObjectHttpHandler;
+import cn.jeesoft.qa.libcore.http.handler.QAJsonArrayHttpHandler;
+import cn.jeesoft.qa.libcore.http.handler.QAJsonObjectHttpHandler;
 import cn.jeesoft.qa.libcore.http.handler.QAJsonHttpHandler;
 import cn.jeesoft.qa.libcore.http.handler.QAStringHttpHandler;
 import cn.jeesoft.qa.libcore.http.part.Part;
@@ -57,9 +57,6 @@ import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 /**
  * 网络请求客户端
@@ -139,8 +136,8 @@ public class OkHttp {
         registerHttpHandler(QAJson.class, new QAJsonHttpHandler());
         registerHttpHandler(QAJsonObject.class, new QAJsonHttpHandler());
         registerHttpHandler(QAJsonArray.class, new QAJsonHttpHandler());
-        registerHttpHandler(org.json.JSONObject.class, new QAJSONObjectHttpHandler());
-        registerHttpHandler(org.json.JSONArray.class, new QAJSONArrayHttpHandler());
+        registerHttpHandler(org.json.JSONObject.class, new QAJsonObjectHttpHandler());
+        registerHttpHandler(org.json.JSONArray.class, new QAJsonArrayHttpHandler());
         registerHttpHandler(com.alibaba.fastjson.JSONObject.class, new QAFastJsonHttpHandler());
         registerHttpHandler(com.alibaba.fastjson.JSONArray.class, new QAFastJsonHttpHandler());
     }
