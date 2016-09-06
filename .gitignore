@@ -30,7 +30,6 @@ proguard/
 *.iws
 .idea/
 
-/local.properties
 .DS_Store
 /captures
 
