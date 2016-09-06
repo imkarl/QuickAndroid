@@ -7,7 +7,7 @@
 * 本项目的宗旨是：整合一个快速、完善的Android开发框架。
 
   > * 编译工具使用：Android Studio
-  > * 编译环境：Android 6.0（API level 23）、gradle:2.0.0-alpha1
+  > * 编译环境：Android 7.0（API level 24）、gradle:2.1.3
   > * 最低支持版本：Android 3.0（API level 11）
   > * 项目编码采用；UTF-8
   > * 为避免重复造轮子，功能模块优先考虑现有的国内外成熟开源框架
