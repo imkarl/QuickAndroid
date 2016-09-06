@@ -7,6 +7,6 @@ import com.squareup.okhttp.Response;
  */
 public interface QAHttpHandler<T> {
 
-    public T handlerResponse(Response response) throws Exception;
+    T handlerResponse(Response response) throws Exception;
 
 }
