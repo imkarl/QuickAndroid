@@ -68,12 +68,11 @@ dependencies {
 
 
 ### 关于作者
-* 作 者： 壳
-* Email： <alafighting@163.com>
+* 作 者： imkarl
+* Email： <imkarl@126.com>
 * 有任何问题或建议，欢迎联系我...
-* 你也可以加入QQ群：432563131（QuickAndroid交流群）
 
 
 请关注Github，以便随时了解最新动态
-https://github.com/alafighting/QuickAndroid
+https://github.com/imkarl/QuickAndroid
 
